@@ -87,9 +87,9 @@ if __name__ == "__main__":
             print(Matriz[i][j], end=" ")
         print()
 
-    # Si quiero calcular una matriz concreta
-    # Matriz = [[2, 3, 1], [4, 5, 6], [7, 8, 9]]
+    # Si quiero calcular una matriz concreta 5x5
+    # Matriz = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15], [16, 17, 18, 19, 20], [21, 22, 23, 24, 25]]
 
     # Calculamos el determinante de la matriz
     determinante = determinante_manera_recursiva(Matriz)
-    print("Resultado del determinante de la matriz ramdom calculado de manera recursiva: ", determinante)
+    print("Resultado del determinante de la matriz 5x5 calculado de manera recursiva: ", determinante)
