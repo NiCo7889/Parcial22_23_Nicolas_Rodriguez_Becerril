@@ -1,54 +1,67 @@
 """
 La alianza rebelde necesita comunicarse de manera segura pero el imperio galáctico interviene todas la comunicaciones, por lo que la princesa Leia nos encarga el desarrollo 
 de un algoritmo de encriptación para las comunicaciones rebeldes, que contemple los siguientes requerimientos: cada carácter deberá ser encriptado a ocho caracteres;
-se deberá generar dos tablas hash para encriptar y desencriptar, para los caracteres desde el “ ” hasta el “}” –es decir desde el 32 al 125 de la tabla ASCII.
+se deberá generar dos tablas hash para encriptar y desencriptar, para los caracteres desde el “{” hasta el “}” –es decir desde el 32 al 125 de la tabla ASCII.
 """
 
 
-import hashlib
-
-class RebelEncryption:
+class Encriptador:
     def __init__(self):
-        self.char_to_ascii = {}
-        self.ascii_to_char = {}
-        for i in range(32, 126):
-            char = chr(i)
-            ascii_val = str(i)
-            bin_val = bin(i)[2:].zfill(8)
-            hashed_val = hashlib.sha256(bin_val.encode()).hexdigest()
-            self.char_to_ascii[char] = hashed_val
-            self.ascii_to_char[ascii_val] = char
+        self.tabla_encriptacion = {}
+        self.tabla_desencriptacion = {}
 
-    def encrypt(self, message):
-        encrypted_message = ""
-        for char in message:
-            if char in self.char_to_ascii:
-                encrypted_message += self.char_to_ascii[char]
-        return encrypted_message
+    def generar_tabla_encriptacion(self):
+        caracteres = list(range(32, 126)) # Caracteres desde " " hasta "}"
+        for c in caracteres:
+            cadena_encriptada = self.__encriptar_caracter(chr(c))
+            self.tabla_encriptacion[chr(c)] = cadena_encriptada
 
-    def decrypt(self, encrypted_message):
-        decrypted_message = ""
-        for i in range(0, len(encrypted_message), 64):
-            block = encrypted_message[i:i+64]
-            ascii_val = ""
-            for j in range(0, 64, 8):
-                hashed_val = block[j:j+8]
-                for k, v in self.char_to_ascii.items():
-                    if v == hashed_val:
-                        ascii_val += str(ord(k))
-                        break
-            if ascii_val in self.ascii_to_char:
-                decrypted_message += self.ascii_to_char[ascii_val]
-        return decrypted_message
+    def generar_tabla_desencriptacion(self):
+        for clave, valor in self.tabla_encriptacion.items():
+            self.tabla_desencriptacion[valor] = clave
+
+    def __encriptar_caracter(self, caracter):
+        codigo = ord(caracter)
+        binario = bin(codigo)[2:].zfill(8) # Convertir el código a binario con 8 bits
+        encriptado = ""
+        for bit in binario:
+            encriptado += str(int(bit) ^ 1) # Encriptar cambiando 1 por 0 y viceversa
+        return encriptado * 8 # Repetir la cadena encriptada 8 veces para tener 64 bits (8 caracteres)
+
+    def encriptar_mensaje(self, mensaje):
+        mensaje_encriptado = ""
+        for c in mensaje:
+            if c in self.tabla_encriptacion:
+                mensaje_encriptado += self.tabla_encriptacion[c]
+            else:
+                mensaje_encriptado += c
+        return mensaje_encriptado
+
+    def desencriptar_mensaje(self, mensaje_encriptado):
+        mensaje_desencriptado = ""
+        for i in range(0, len(mensaje_encriptado), 64):
+            cadena_encriptada = mensaje_encriptado[i:i+64]
+            if cadena_encriptada in self.tabla_desencriptacion:
+                mensaje_desencriptado += self.tabla_desencriptacion[cadena_encriptada]
+            else:
+                mensaje_desencriptado += cadena_encriptada
+        return mensaje_desencriptado
 
 
-# Prueba del código
+
 if __name__ == "__main__":
-    rebel_encryption = RebelEncryption()
-    message = "La princesa Leia ha enviado un mensaje urgente desde la base rebelde"
-    encrypted_message = rebel_encryption.encrypt(message)
-    decrypted_message = rebel_encryption.decrypt(encrypted_message)
+    # Crear un objeto Encriptador
+    encriptador = Encriptador()
 
-    print("Mensaje original:", message)
-    print("Mensaje encriptado:", encrypted_message)
-    print("Mensaje desencriptado:", decrypted_message)
+    # Generar las tablas de encriptación y desencriptación
+    encriptador.generar_tabla_encriptacion()
+    encriptador.generar_tabla_desencriptacion()
+
+    # Encriptar un mensaje
+    mensaje = "Hola rebelión!"
+    mensaje_encriptado = encriptador.encriptar_mensaje(mensaje)
+    print("Mensaje encriptado:", mensaje_encriptado)
+
+    # Desencriptar el mensaje encriptado
+    mensaje_desencriptado = encriptador.desencriptar_mensaje(mensaje_encriptado)
+    print("Mensaje desencriptado:", mensaje_desencriptado)
