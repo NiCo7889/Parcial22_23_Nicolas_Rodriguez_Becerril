@@ -25,6 +25,7 @@ class Listanumeros:
 
     def ordenar_lista(self):
         self.lista = self.mergesort(self.lista)
+        return self.lista
 
     def mergesort(self, lista):
         # Método de ordenamiento mergesort

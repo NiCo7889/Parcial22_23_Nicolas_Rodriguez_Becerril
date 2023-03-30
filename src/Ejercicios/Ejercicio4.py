@@ -48,9 +48,11 @@ if __name__ == "__main__":
     alumno1 = Alumno("Juan", 7)
     print(alumno1)
     print(alumno1.calificacion(), "\n")
+
     alumno2 = Alumno("Pedro", 4)
     print(alumno2)
     print(alumno2.calificacion(), "\n")
+    
     alumno3 = Alumno("Maria", 6)
     print(alumno3)
     print(alumno3.calificacion())
