@@ -21,8 +21,18 @@ class Alumno:
             return f"El alumno {self.nombre} ha suspendido"
 
 
+import unittest
+
+class TestEjercicios(unittest.TestCase):
+
+    def test_calificacion(self):
+        self.assertEqual(Alumno("Juan", 7).calificacion(), "El alumno Juan ha aprobado")
+        self.assertEqual(Alumno("Pedro", 4).calificacion(), "El alumno Pedro ha suspendido")
+        self.assertEqual(Alumno("Maria", 6).calificacion(), "El alumno Maria ha aprobado")
+
 if __name__ == "__main__":
 
+    unittest.main()
     alumno1 = Alumno("Juan", 7)
     print(alumno1.calificacion(), "\n")
 

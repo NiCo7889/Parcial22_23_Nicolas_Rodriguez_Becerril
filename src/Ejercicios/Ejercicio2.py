@@ -15,11 +15,13 @@ class Listanumeros:
         self.lista = lista
 
     def imprimir_multiplos(self):
+        multiplos = []
         for numero in self.lista:
-            if numero % 10 == 0 and numero < 200:
-                print(numero)
             if numero > 300:
                 break
+            if numero % 10 == 0 and numero < 200:
+                multiplos.append(numero)
+        return multiplos
 
     def ordenar_lista(self):
         self.lista = self.mergesort(self.lista)
@@ -70,7 +72,7 @@ if __name__ == "__main__":
     numeros = Listanumeros([18, 50, 210, 80, 145, 333, 70, 30])
 
     # Imprimimos los múltiplos de 10 menores a 200
-    numeros.imprimir_multiplos()
+    print(numeros.imprimir_multiplos())
 
     # Ordenamos la lista usando el método mergesort
     numeros.ordenar_lista()
