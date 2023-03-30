@@ -1,10 +1,9 @@
 """
-resuelve este ejercicio implementando la programacion orientada a objetos:
-
 Crea una clase llamada Alumno que tenga los atributos nombre y nota
 Crea el constructor de la clase. Añadir en el constructor un print para informar de que el alumno se ha creado con éxito
 Crear un método llamado calificación que imprima por pantalla si el alumno ha aprobado o suspendido en base a su nota
 
+Experiemntación:
 Crea algunos alumnos
 Prueba a ejecutar el método calificación de cada objeto que has creado
 """
@@ -14,9 +13,6 @@ class Alumno:
         self.nombre = nombre
         self.nota = nota
         print(f"El alumno {self.nombre} ha sido creado con éxito")
-
-    def __str__(self):
-        return f"El alumno {self.nombre} tiene una nota de {self.nota}"
     
     def calificacion(self):
         if self.nota >= 5:
@@ -28,11 +24,10 @@ class Alumno:
 if __name__ == "__main__":
 
     alumno1 = Alumno("Juan", 7)
-    print(alumno1)
     print(alumno1.calificacion(), "\n")
+
     alumno2 = Alumno("Pedro", 4)
-    print(alumno2)
     print(alumno2.calificacion(), "\n")
+
     alumno3 = Alumno("Maria", 6)
-    print(alumno3)
     print(alumno3.calificacion())
